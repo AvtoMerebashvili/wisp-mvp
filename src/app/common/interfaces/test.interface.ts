@@ -3,10 +3,20 @@ export interface IBasetest {
   value: string;
 }
 
-export interface iQuestion extends IBasetest {}
-export interface iAnswer extends IBasetest {}
+export interface IWord extends IBasetest {}
+export interface IGif extends IBasetest {}
 
-export interface IQuestionAnswers {
-  questionId: number;
-  answerId: number;
+export interface IWordGifs {
+  wordId: number;
+  gifId: number;
+}
+
+export interface IWordGifsValuesMatch {
+  word: string;
+  gif: string;
+}
+
+export interface IWordGifsIdsMatch {
+  word: number;
+  gif: number;
 }

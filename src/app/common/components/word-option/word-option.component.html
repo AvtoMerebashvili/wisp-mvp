@@ -1,3 +1,8 @@
-<div class="option padding">
-  <p class="hover">{{ value }}</p>
+<div
+  class="option padding border hover"
+  [ngClass]="{ disabled: disabled }"
+  [class]="state"
+  (click)="onClick()"
+>
+  <p>{{ value }}</p>
 </div>

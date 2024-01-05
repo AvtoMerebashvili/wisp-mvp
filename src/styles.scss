@@ -1,17 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,1000&family=Roboto+Mono:ital,wght@1,500&family=Roboto:wght@300&display=swap");
 
 * {
-  font-family: system-ui;
+  font-family: "Roboto Flex", sans-serif;
 }
 
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f9faff;
+}
+
+p {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 28px;
 }
 
 .padding {
@@ -35,10 +50,35 @@ img {
   border-radius: 5px;
 }
 
+.correct {
+  border: 1px solid green;
+  border-radius: 5px;
+  animation: pending-correct 2s;
+}
+
+.incorrect {
+  border: 1px solid red;
+  border-radius: 5px;
+  animation: pending-incorrect 2s;
+}
+
+.pending {
+  border: 1px solid rgb(198, 198, 198);
+  border-radius: 5px;
+  width: 95%;
+  img {
+    width: 260px;
+  }
+  p {
+    font-size: 18px;
+  }
+}
+
 .task {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 25px;
   h1 {
     text-align: center;
     border-bottom: 1px solid rgb(223, 223, 223);
@@ -61,5 +101,34 @@ img {
 .hover {
   &:hover {
     cursor: pointer;
+  }
+}
+
+.disabled {
+  opacity: 80%;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
+@keyframes pending-correct {
+  from {
+    border: 1px solid rgb(198, 198, 198);
+    box-shadow: 0px 0px 0 -12px rgb(198, 198, 198);
+  }
+  to {
+    border: 1px solid green;
+    box-shadow: 0px 0px 20px -8px green;
+  }
+}
+
+@keyframes pending-incorrect {
+  from {
+    border: 1px solid rgb(198, 198, 198);
+    box-shadow: 0px 0px 0 -12px rgb(198, 198, 198);
+  }
+  to {
+    border: 1px solid red;
+    box-shadow: 0px 0px 20px -8px red;
   }
 }

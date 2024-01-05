@@ -1,5 +1,10 @@
 @if (showSpinner$ | async) {
 <div class="app">
+  <mat-progress-bar
+    class="box-shadow"
+    mode="determinate"
+    [value]="progess$ | async"
+  ></mat-progress-bar>
   <div class="test">
     <router-outlet></router-outlet>
   </div>

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from '../../shared.module';
+import { TOptionResult } from '../../interfaces/option-result.type';
 
 @Component({
   selector: 'app-word-option',
@@ -10,4 +11,9 @@ import { SharedModule } from '../../shared.module';
 })
 export class WordOptionComponent {
   @Input() value!: string;
+  @Input() state!: TOptionResult;
+  @Input() disabled = false;
+  @Output() clicked = new EventEmitter();
+
+  onClick = () => (this.disabled ? false : this.clicked.emit(this.value));
 }

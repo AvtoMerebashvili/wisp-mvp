@@ -1,4 +1,9 @@
-<div class="card padding border">
+<div
+  class="card padding border hover"
+  [ngClass]="{ disabled: disabled }"
+  [class]="state"
+  (click)="onClick()"
+>
   <img [src]="src" alt="" />
   @if (describe.length) {
   <p class="text-center">{{ describe }}</p>

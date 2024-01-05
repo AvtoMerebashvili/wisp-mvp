@@ -7,7 +7,10 @@ export const quizContent: IGenerateQuiz[] = [
     count: 1,
     route: Task.Recognize,
   },
-
+  {
+    count: 1,
+    route: Task.Connect,
+  },
   {
     count: 2,
     route: Task.EnterAnswer,

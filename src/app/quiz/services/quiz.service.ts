@@ -4,6 +4,8 @@ import {
   ITask,
 } from '../common/interface/generate-quiz.interface';
 import { ReplaySubject } from 'rxjs';
+import { gifs, wordGifs, words } from '../data/data';
+import { IGif, IWord } from '../../common/interfaces/test.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +26,23 @@ export class QuizService {
 
     this.tasks$.next(rearangedTasks);
   }
+
+  public getRandomGif = () => gifs[Math.floor(Math.random() * 4)];
+  public getRandomWord = () => words[Math.floor(Math.random() * 4)];
+  public getFourGif = () => gifs;
+  public getFourWord = () => words;
+
+  public isRight(word: IWord, gif: IGif) {
+    const foundWord = wordGifs.find((wg) => wg.wordId == word.id);
+
+    if (foundWord) {
+      return foundWord.gifId == gif.id ? true : false;
+    }
+    return false;
+  }
+
+  public getWordByValue = (word: string) => words.find((w) => w.value === word);
+  public getGifByValue = (path: string) => gifs.find((w) => w.value === path);
 
   private rearangeQuiz(tasks: ITask[]): ITask[] {
     const tasksClone = [...tasks];

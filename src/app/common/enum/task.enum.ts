@@ -4,4 +4,5 @@ export enum Task {
   ChooseWord = 'choose-word',
   ChooseGesture = 'choose-gesture',
   Repeat = 'repeat',
+  Connect = 'connect',
 }

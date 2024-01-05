@@ -1,10 +1,6 @@
-import {
-  IQuestionAnswers,
-  iAnswer,
-  iQuestion,
-} from '../../common/interfaces/test.interface';
+import { IGif, IWord, IWordGifs } from '../../common/interfaces/test.interface';
 
-export const questions: iQuestion[] = [
+export const words: IWord[] = [
   {
     id: 1,
     value: 'ზღარბი',
@@ -23,7 +19,7 @@ export const questions: iQuestion[] = [
   },
 ];
 
-export const answers: iAnswer[] = [
+export const gifs: IGif[] = [
   {
     id: 1,
     value: 'assets/avocado.gif',
@@ -42,21 +38,21 @@ export const answers: iAnswer[] = [
   },
 ];
 
-export const questionAnswers: IQuestionAnswers[] = [
+export const wordGifs: IWordGifs[] = [
   {
-    questionId: 1,
-    answerId: 3,
+    wordId: 1,
+    gifId: 3,
   },
   {
-    questionId: 2,
-    answerId: 1,
+    wordId: 2,
+    gifId: 1,
   },
   {
-    questionId: 3,
-    answerId: 4,
+    wordId: 3,
+    gifId: 4,
   },
   {
-    questionId: 4,
-    answerId: 2,
+    wordId: 4,
+    gifId: 2,
   },
 ];

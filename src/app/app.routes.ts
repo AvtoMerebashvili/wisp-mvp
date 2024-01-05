@@ -40,4 +40,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./tasks/repeat/repeat.component').then((c) => c.RepeatComponent),
   },
+  {
+    path: Task.Connect,
+    loadComponent: () =>
+      import('./tasks/connect/connect.component').then(
+        (c) => c.ConnectComponent
+      ),
+  },
 ];

@@ -13,9 +13,12 @@ import {
 } from '@angular/material/snack-bar';
 import { WordOptionComponent } from './components/word-option/word-option.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
+    CommonModule,
     FormsModule,
     MatCardModule,
     CardComponent,
@@ -28,8 +31,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSnackBarAction,
     WordOptionComponent,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   exports: [
+    CommonModule,
     FormsModule,
     MatCardModule,
     CardComponent,
@@ -39,6 +44,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSnackBarModule,
     WordOptionComponent,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
 })
 export class SharedModule {}
