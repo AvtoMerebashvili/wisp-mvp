@@ -20,6 +20,31 @@ export class QuizService {
         return { id: i, route: r };
       });
 
-    this.tasks$.next(tasks);
+    const rearangedTasks = this.rearangeQuiz(tasks);
+
+    this.tasks$.next(rearangedTasks);
+  }
+
+  private rearangeQuiz(tasks: ITask[]): ITask[] {
+    const tasksClone = [...tasks];
+    for (let currIdx = 0; currIdx < tasks.length; currIdx++) {
+      const nextIdx = currIdx + 1;
+      const currentTask = tasks[currIdx];
+      const nextTask = tasks[nextIdx];
+      if (currentTask.route == nextTask?.route) {
+        const differentIdx = tasksClone.findIndex(
+          (task, i) => task.route != nextTask.route && i > nextIdx
+        );
+        if (differentIdx) {
+          [tasksClone[nextIdx], tasksClone[differentIdx]] = [
+            tasksClone[differentIdx],
+            tasksClone[nextIdx],
+          ];
+          return this.rearangeQuiz(tasksClone);
+        }
+      }
+    }
+
+    return tasksClone;
   }
 }
