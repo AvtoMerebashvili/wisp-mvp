@@ -2,13 +2,19 @@
   <h1>ამოირჩიე ჟესტი</h1>
   <div class="list-column">
     <div class="cell">
-      <p>avokado</p>
+      <p>{{ word.value }}</p>
     </div>
     <div class="list-row">
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
+      @for (gif of gifs; let idx = $index; track idx) {
+      <div class="hover">
+        <app-card
+          [src]="gif.value"
+          [state]="idx === answeredsIdx ? state : ''"
+          [disabled]="answeredsIdx != undefined"
+          (clicked)="onSelect($event, idx)"
+        ></app-card>
+      </div>
+      }
     </div>
   </div>
 </div>

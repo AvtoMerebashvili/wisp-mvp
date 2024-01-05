@@ -2,14 +2,17 @@
   <h1>ამოირჩიე სიტყვა</h1>
   <div class="list-column">
     <div class="cell">
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
+      <app-card [src]="question.value"></app-card>
     </div>
     <div class="list-row">
-      <app-word-option [value]="'arika'"></app-word-option>
-      <app-word-option [value]="'arika'"></app-word-option>
-
-      <app-word-option [value]="'arika'"></app-word-option>
-      <app-word-option [value]="'arika'"></app-word-option>
+      @for (answer of answers; let idx = $index; track idx) {
+      <app-word-option
+        [value]="answer.value"
+        [state]="idx === answeredsIdx ? state : ''"
+        [disabled]="answeredsIdx != undefined"
+        (clicked)="onSelect($event, idx)"
+      ></app-word-option>
+      }
     </div>
   </div>
 </div>

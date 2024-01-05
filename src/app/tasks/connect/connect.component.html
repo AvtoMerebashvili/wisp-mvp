@@ -1,0 +1,23 @@
+<div class="task">
+  <h1>დააკავშირე</h1>
+  <div class="list-row">
+    @for (gif of gifs; let idx = $index; track idx) {
+    <app-card
+      [src]="gif.value"
+      [state]="cardState[idx]"
+      [disabled]="disabledGifs[idx]"
+      (clicked)="onCardSelect(idx)"
+    ></app-card>
+    }
+  </div>
+  <div class="list-row">
+    @for (word of words; let idx = $index; track idx) {
+    <app-word-option
+      [value]="word.value"
+      [state]="wordState[idx]"
+      [disabled]="disabledWords[idx]"
+      (clicked)="onWordSelect(idx)"
+    ></app-word-option>
+    }
+  </div>
+</div>

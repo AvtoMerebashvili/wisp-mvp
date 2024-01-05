@@ -1,17 +1,10 @@
 <div class="task">
   <h1>დაიმახსოვრე</h1>
   <div class="list-row">
+    @for (option of data$ | async; track option.gif) {
     <div class="cell">
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
+      <app-card [src]="option.gif" [describe]="option.word"></app-card>
     </div>
-    <div class="cell">
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
-    </div>
-    <div class="cell">
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
-    </div>
-    <div class="cell">
-      <app-card src="assets/avocado.gif" describe="ავოკადო"></app-card>
-    </div>
+    }
   </div>
 </div>
