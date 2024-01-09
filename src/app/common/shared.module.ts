@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { CardComponent } from './components/card/card.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,6 +32,7 @@ import { CommonModule } from '@angular/common';
     WordOptionComponent,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    ReactiveFormsModule,
   ],
   exports: [
     CommonModule,
@@ -44,6 +45,7 @@ import { CommonModule } from '@angular/common';
     MatSnackBarModule,
     WordOptionComponent,
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
     MatProgressBarModule,
   ],
 })

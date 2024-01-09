@@ -10,7 +10,7 @@ import { QuizService } from '../../quiz/services/quiz.service';
   styleUrl: './repeat.component.scss',
 })
 export class RepeatComponent {
-  gifs = this.quizService.getFourGif();
+  gif = this.quizService.getRandomGif();
 
   constructor(private quizService: QuizService) {}
 }

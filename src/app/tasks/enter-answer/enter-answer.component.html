@@ -8,17 +8,7 @@
     <div class="padding" [class]="state">
       <mat-form-field class="example-form-field">
         <mat-label>ჩაწერეთ პასუხი</mat-label>
-        <input
-          matInput
-          type="text"
-          [disabled]="this.state"
-          [(ngModel)]="value"
-        />
-        @if (value) {
-        <button matSuffix mat-icon-button aria-label="Clear" (click)="onDone()">
-          <mat-icon>done</mat-icon>
-        </button>
-        }
+        <input matInput type="text" [formControl]="formControl" />
       </mat-form-field>
     </div>
   </div>
