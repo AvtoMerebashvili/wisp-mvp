@@ -63,7 +63,11 @@ export class EnterAnswerComponent implements OnInit {
     );
     if (foundWord) {
       const isRight = this.quizService.isRight(foundWord, this.question);
-      isRight ? (this.state = 'correct') : (this.state = 'incorrect');
+      if (isRight) this.state = 'correct';
+      else {
+        this.state = 'incorrect';
+        this.quizService.decrementLives();
+      }
     } else this.state = 'incorrect';
 
     const dataToStore: IEnterAnswerStore = {

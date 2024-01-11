@@ -14,6 +14,7 @@ import { QuizService } from './quiz/services/quiz.service';
 })
 export class AppComponent implements OnInit {
   public tasks$ = this.quizService.tasks$;
+  public lives$ = this.quizService.lives$;
   public currentRoute$ = this.tasks$.pipe(map((t) => t[0]));
   public showSpinner$ = this.tasks$.pipe(map((tasks) => tasks.length));
   public progess$ = new BehaviorSubject(0);

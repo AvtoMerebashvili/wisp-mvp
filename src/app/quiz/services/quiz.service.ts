@@ -3,7 +3,7 @@ import {
   IGenerateQuiz,
   ITask,
 } from '../common/interface/generate-quiz.interface';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, map, take, tap } from 'rxjs';
 import { gifs, wordGifs, words } from '../data/data';
 import { IGif, IWord } from '../../common/interfaces/test.interface';
 import { floorRandom } from '../../common/functions/floor-random.function';
@@ -13,6 +13,7 @@ import { floorRandom } from '../../common/functions/floor-random.function';
 })
 export class QuizService<T> {
   public tasks$ = new ReplaySubject<ITask[]>();
+  public lives$ = new BehaviorSubject<number>(5);
   private taskStore = new Map<number, T>();
 
   constructor() {}
@@ -48,6 +49,14 @@ export class QuizService<T> {
   public setInStore = (taskId: number, v: any) => this.taskStore.set(taskId, v);
   public getFromStore = (taskId: number): T => this.taskStore.get(taskId) as T;
   public existsInStore = (taskId: number) => this.taskStore.has(taskId);
+
+  public decrementLives = () =>
+    this.lives$
+      .pipe(
+        take(1),
+        tap((v) => this.lives$.next(--v))
+      )
+      .subscribe();
 
   private rearangeQuiz(tasks: ITask[]): ITask[] {
     const tasksClone = [...tasks];

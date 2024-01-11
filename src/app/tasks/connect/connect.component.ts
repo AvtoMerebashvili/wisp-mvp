@@ -104,6 +104,7 @@ export class ConnectComponent {
       this.updateProperties('correct');
     } else {
       this.updateProperties('incorrect');
+      this.quizService.decrementLives();
     }
   }
 

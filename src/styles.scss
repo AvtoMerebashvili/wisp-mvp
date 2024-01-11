@@ -84,18 +84,20 @@ img {
     border-bottom: 1px solid rgb(223, 223, 223);
     padding: 15px;
   }
-  .list-row {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .list-column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
+}
+
+.list-row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.list-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
 
 .hover {
