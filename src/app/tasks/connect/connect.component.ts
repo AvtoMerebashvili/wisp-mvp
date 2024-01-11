@@ -7,6 +7,8 @@ import {
   IWord,
   IWordGifsIdsMatch,
 } from '../../common/interfaces/test.interface';
+import { ActivatedRoute } from '@angular/router';
+import { IConncetStore } from '../interfaces/task-store.interface';
 
 @Component({
   selector: 'app-connect',
@@ -16,8 +18,10 @@ import {
   styleUrl: './connect.component.scss',
 })
 export class ConnectComponent {
-  gifs = this.quizService.getFourGif();
-  words = this.quizService.getFourWord();
+  taskId = this.route.snapshot.params['id'];
+
+  gifs!: IGif[];
+  words!: IWord[];
 
   wordSelectedIdx: number | null = null;
   cardSelectedIdx: number | null = null;
@@ -30,7 +34,12 @@ export class ConnectComponent {
 
   connecteds: IWordGifsIdsMatch[] = [];
 
-  constructor(private quizService: QuizService) {}
+  constructor(
+    private quizService: QuizService<IConncetStore>,
+    private route: ActivatedRoute
+  ) {
+    this.initialize();
+  }
 
   public onCardSelect(idx: number) {
     if (this.cardSelectedIdx != null) {
@@ -41,8 +50,7 @@ export class ConnectComponent {
     const chosenGif = this.gifs[idx];
     if (this.wordSelectedIdx != null) {
       const chosenWord = this.words[this.wordSelectedIdx];
-      this.generateNewConnection(chosenWord, chosenGif);
-      this.handleAnswer(chosenWord, chosenGif);
+      this.handleNewConnection(chosenWord, chosenGif);
     }
   }
 
@@ -55,9 +63,30 @@ export class ConnectComponent {
     const chosenWord = this.words[idx];
     if (this.cardSelectedIdx != null) {
       const chosenGif = this.gifs[this.cardSelectedIdx];
-      this.generateNewConnection(chosenWord, chosenGif);
-      this.handleAnswer(chosenWord, chosenGif);
+      this.handleNewConnection(chosenWord, chosenGif);
     }
+  }
+
+  private initialize() {
+    const alreadyStored = this.quizService.existsInStore(this.taskId);
+    if (alreadyStored) {
+      const storedData = this.quizService.getFromStore(this.taskId);
+      this.gifs = storedData.gifs;
+      this.words = storedData.words;
+      this.wordState = storedData.wordState;
+      this.cardState = storedData.cardState;
+      this.disabledGifs = storedData.disabledGifs;
+      this.disabledWords = storedData.disabledWords;
+    } else {
+      this.gifs = this.quizService.getFourGif();
+      this.words = this.quizService.getFourWord();
+    }
+  }
+
+  private handleNewConnection(chosenWord: IWord, chosenGif: IGif) {
+    this.generateNewConnection(chosenWord, chosenGif);
+    this.handleAnswer(chosenWord, chosenGif);
+    this.storeData();
   }
 
   private generateNewConnection(chosenWord: IWord, chosenGif: IGif) {
@@ -87,5 +116,18 @@ export class ConnectComponent {
     }
     this.wordSelectedIdx = null;
     this.cardSelectedIdx = null;
+  }
+
+  private storeData() {
+    const newDataToStore: IConncetStore = {
+      gifs: this.gifs,
+      words: this.words,
+      wordState: this.wordState,
+      cardState: this.cardState,
+      disabledWords: this.disabledWords,
+      disabledGifs: this.disabledGifs,
+      connecteds: this.connecteds,
+    };
+    this.quizService.setInStore(this.taskId, newDataToStore);
   }
 }

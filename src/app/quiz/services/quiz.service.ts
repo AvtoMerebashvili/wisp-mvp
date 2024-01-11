@@ -6,12 +6,14 @@ import {
 import { ReplaySubject } from 'rxjs';
 import { gifs, wordGifs, words } from '../data/data';
 import { IGif, IWord } from '../../common/interfaces/test.interface';
+import { floorRandom } from '../../common/functions/floor-random.function';
 
 @Injectable({
   providedIn: 'root',
 })
-export class QuizService {
-  tasks$ = new ReplaySubject<ITask[]>();
+export class QuizService<T> {
+  public tasks$ = new ReplaySubject<ITask[]>();
+  private taskStore = new Map<number, T>();
 
   constructor() {}
 
@@ -27,11 +29,10 @@ export class QuizService {
     this.tasks$.next(rearangedTasks);
   }
 
-  public getRandomGif = () => gifs[Math.floor(Math.random() * 4)];
-  public getRandomWord = () => words[Math.floor(Math.random() * 4)];
+  public getRandomGif = () => gifs[floorRandom(4)];
+  public getRandomWord = () => words[floorRandom(4)];
   public getFourGif = () => gifs;
   public getFourWord = () => words;
-
   public isRight(word: IWord, gif: IGif) {
     const foundWord = wordGifs.find((wg) => wg.wordId == word.id);
 
@@ -44,12 +45,16 @@ export class QuizService {
   public getWordByValue = (word: string) => words.find((w) => w.value === word);
   public getGifByValue = (path: string) => gifs.find((w) => w.value === path);
 
+  public setInStore = (taskId: number, v: any) => this.taskStore.set(taskId, v);
+  public getFromStore = (taskId: number): T => this.taskStore.get(taskId) as T;
+  public existsInStore = (taskId: number) => this.taskStore.has(taskId);
+
   private rearangeQuiz(tasks: ITask[]): ITask[] {
     const tasksClone = [...tasks];
-    for (let currIdx = 0; currIdx < tasks.length; currIdx++) {
+    for (let currIdx = 0; currIdx < tasksClone.length; currIdx++) {
       const nextIdx = currIdx + 1;
-      const currentTask = tasks[currIdx];
-      const nextTask = tasks[nextIdx];
+      const currentTask = tasksClone[currIdx];
+      const nextTask = tasksClone[nextIdx];
       if (currentTask.route == nextTask?.route) {
         const differentIdx = tasksClone.findIndex(
           (task, i) => task.route != nextTask.route && i > nextIdx

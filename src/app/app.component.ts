@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { BehaviorSubject, filter, map, mergeMap, of, take, tap } from 'rxjs';
 import { SharedModule } from './common/shared.module';
 import { quizContent } from './quiz/data/content';
-import { BehaviorSubject, filter, map, mergeMap, of, take, tap } from 'rxjs';
 import { QuizService } from './quiz/services/quiz.service';
 
 @Component({
@@ -18,7 +18,10 @@ export class AppComponent implements OnInit {
   public showSpinner$ = this.tasks$.pipe(map((tasks) => tasks.length));
   public progess$ = new BehaviorSubject(0);
 
-  constructor(private quizService: QuizService, private router: Router) {}
+  constructor(
+    private quizService: QuizService<unknown>,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.initNavigation();
@@ -41,7 +44,9 @@ export class AppComponent implements OnInit {
             map((task) => tasks.findIndex((t) => t.id == task.id)),
             map((currentTaskIdx) => tasks[currentTaskIdx + (next ? 1 : -1)]),
             filter((newTask) => Boolean(newTask) != false),
-            tap((newTask) => this.router.navigate([newTask.route])),
+            tap((newTask) =>
+              this.router.navigate([newTask.route + `/${newTask.id}`])
+            ),
             tap((newTask) => (this.currentRoute$ = of(newTask))),
             map((newTask) => tasks.findIndex((t) => t.id == newTask.id)),
             tap((newTaskIdx) =>
@@ -58,7 +63,9 @@ export class AppComponent implements OnInit {
     this.tasks$
       .pipe(
         take(1),
-        tap((routes) => this.router.navigate([routes[0].route]))
+        tap((routes) =>
+          this.router.navigate([routes[0].route + `/${routes[0].id}`])
+        )
       )
       .subscribe();
 }
