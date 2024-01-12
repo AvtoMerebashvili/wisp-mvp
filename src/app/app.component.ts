@@ -19,10 +19,7 @@ export class AppComponent implements OnInit {
   public showSpinner$ = this.tasks$.pipe(map((tasks) => tasks.length));
   public progess$ = new BehaviorSubject(0);
 
-  constructor(
-    private quizService: QuizService<unknown>,
-    private router: Router
-  ) {}
+  constructor(private quizService: QuizService<any>, private router: Router) {}
 
   ngOnInit(): void {
     this.initNavigation();
@@ -43,7 +40,13 @@ export class AppComponent implements OnInit {
           this.currentRoute$.pipe(
             take(1),
             map((task) => tasks.findIndex((t) => t.id == task.id)),
-            map((currentTaskIdx) => tasks[currentTaskIdx + (next ? 1 : -1)]),
+            filter((currentIdx) =>
+              next ? tasks[tasks.length - 1].id != tasks[currentIdx].id : true
+            ),
+            filter((currentIdx) =>
+              next ? this.quizService.existsInStore(tasks[currentIdx].id) : true
+            ),
+            map((currentIdx) => tasks[currentIdx + (next ? 1 : -1)]),
             filter((newTask) => Boolean(newTask) != false),
             tap((newTask) =>
               this.router.navigate([newTask.route + `/${newTask.id}`])

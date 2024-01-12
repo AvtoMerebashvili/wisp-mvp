@@ -15,7 +15,7 @@ import { TRecoginzeStore } from '../interfaces/task-store.interface';
   styleUrl: './recognize.component.scss',
 })
 export class RecognizeComponent implements OnInit {
-  public taskId = this.route.snapshot.params['id'];
+  public taskId = +this.route.snapshot.params['id'];
   public data$ = new BehaviorSubject<IWordGifsValuesMatch[]>([]);
 
   constructor(

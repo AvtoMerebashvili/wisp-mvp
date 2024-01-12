@@ -14,7 +14,7 @@ import { TRepeatStore } from '../interfaces/task-store.interface';
   styleUrl: './repeat.component.scss',
 })
 export class RepeatComponent implements OnInit {
-  taskId = this.route.snapshot.params['id'];
+  taskId = +this.route.snapshot.params['id'];
   gif!: IGif;
 
   constructor(

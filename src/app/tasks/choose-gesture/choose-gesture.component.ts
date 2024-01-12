@@ -17,7 +17,7 @@ import { IGif, IWord } from '../../common/interfaces/test.interface';
   styleUrl: './choose-gesture.component.scss',
 })
 export class ChooseGestureComponent {
-  public taskId = this.route.snapshot.params['id'];
+  public taskId = +this.route.snapshot.params['id'];
 
   word!: IWord;
   gifs!: IGif[];

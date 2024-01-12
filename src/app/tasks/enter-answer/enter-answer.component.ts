@@ -19,7 +19,7 @@ import { IEnterAnswerStore } from '../interfaces/task-store.interface';
   styleUrl: './enter-answer.component.scss',
 })
 export class EnterAnswerComponent implements OnInit {
-  taskId = this.route.snapshot.params['id'];
+  taskId = +this.route.snapshot.params['id'];
   formControl = new FormControl('');
   state!: TOptionResult;
   question!: IGif;

@@ -18,7 +18,7 @@ import { IConncetStore } from '../interfaces/task-store.interface';
   styleUrl: './connect.component.scss',
 })
 export class ConnectComponent {
-  taskId = this.route.snapshot.params['id'];
+  taskId = +this.route.snapshot.params['id'];
 
   gifs!: IGif[];
   words!: IWord[];
@@ -120,15 +120,22 @@ export class ConnectComponent {
   }
 
   private storeData() {
-    const newDataToStore: IConncetStore = {
-      gifs: this.gifs,
-      words: this.words,
-      wordState: this.wordState,
-      cardState: this.cardState,
-      disabledWords: this.disabledWords,
-      disabledGifs: this.disabledGifs,
-      connecteds: this.connecteds,
-    };
-    this.quizService.setInStore(this.taskId, newDataToStore);
+    if (
+      this.disabledGifs.length == 4 &&
+      this.disabledWords.length == 4 &&
+      this.disabledGifs.every((v) => v == true) &&
+      this.disabledWords.every((v) => v == true)
+    ) {
+      const newDataToStore: IConncetStore = {
+        gifs: this.gifs,
+        words: this.words,
+        wordState: this.wordState,
+        cardState: this.cardState,
+        disabledWords: this.disabledWords,
+        disabledGifs: this.disabledGifs,
+        connecteds: this.connecteds,
+      };
+      this.quizService.setInStore(this.taskId, newDataToStore);
+    }
   }
 }

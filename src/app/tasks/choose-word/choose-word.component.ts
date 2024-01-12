@@ -14,7 +14,7 @@ import { IChooseWordStore } from '../interfaces/task-store.interface';
   styleUrl: './choose-word.component.scss',
 })
 export class ChooseWordComponent {
-  public taskId = this.route.snapshot.params['id'];
+  public taskId = +this.route.snapshot.params['id'];
 
   question!: IGif;
   answers!: IWord[];
