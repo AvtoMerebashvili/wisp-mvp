@@ -36,14 +36,13 @@ export class ChooseGestureComponent {
     const foundGif = this.quizService.getGifByValue(value);
     if (foundGif) {
       const isRight = this.quizService.isRight(this.word, foundGif);
-      if (isRight) {
-        this.state = 'correct';
-      } else {
-        this.state = 'incorrect';
-        this.quizService.decrementLives();
-      }
-    } else this.state = 'incorrect';
+      if (isRight) this.state = 'correct';
+    }
 
+    if (this.state != 'correct') {
+      this.state = 'incorrect';
+      this.quizService.decrementLives();
+    }
     const dataToStore: IChooseGestureStore = {
       state: this.state,
       answeredsIdx: this.answeredsIdx,

@@ -1,21 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { CardComponent } from './components/card/card.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MatSnackBarAction,
   MatSnackBarActions,
   MatSnackBarLabel,
   MatSnackBarModule,
 } from '@angular/material/snack-bar';
+import { CardComponent } from './components/card/card.component';
 import { WordOptionComponent } from './components/word-option/word-option.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CommonModule } from '@angular/common';
-
+import { DialogComponent } from './components/dialog/dialog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -33,6 +34,7 @@ import { CommonModule } from '@angular/common';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
@@ -47,6 +49,7 @@ import { CommonModule } from '@angular/common';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatProgressBarModule,
+    MatDialogModule,
   ],
 })
 export class SharedModule {}

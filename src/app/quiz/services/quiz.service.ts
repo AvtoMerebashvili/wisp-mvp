@@ -14,7 +14,7 @@ import { floorRandom } from '../../common/functions/floor-random.function';
 export class QuizService<T> {
   public tasks$ = new ReplaySubject<ITask[]>();
   public lives$ = new BehaviorSubject<number>(5);
-  private taskStore = new Map<number, T>();
+  public taskStore = new Map<number, T>();
 
   constructor() {}
 
@@ -28,6 +28,12 @@ export class QuizService<T> {
     const rearangedTasks = this.rearangeQuiz(tasks);
 
     this.tasks$.next(rearangedTasks);
+  }
+
+  public retry(config: IGenerateQuiz[]) {
+    this.clearStore();
+    this.generateQuiz(config);
+    this.lives$.next(5);
   }
 
   public getRandomGif = () => gifs[floorRandom(4)];
@@ -49,6 +55,7 @@ export class QuizService<T> {
   public setInStore = (taskId: number, v: any) => this.taskStore.set(taskId, v);
   public getFromStore = (taskId: number): T => this.taskStore.get(taskId) as T;
   public existsInStore = (taskId: number) => this.taskStore.has(taskId);
+  public clearStore = () => this.taskStore.clear();
 
   public decrementLives = () =>
     this.lives$
@@ -68,7 +75,7 @@ export class QuizService<T> {
         const differentIdx = tasksClone.findIndex(
           (task, i) => task.route != nextTask.route && i > nextIdx
         );
-        if (differentIdx) {
+        if (differentIdx > 0) {
           [tasksClone[nextIdx], tasksClone[differentIdx]] = [
             tasksClone[differentIdx],
             tasksClone[nextIdx],

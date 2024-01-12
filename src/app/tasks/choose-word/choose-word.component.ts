@@ -33,13 +33,13 @@ export class ChooseWordComponent {
     const foundWord = this.quizService.getWordByValue(value);
     if (foundWord) {
       const isRight = this.quizService.isRight(foundWord, this.question);
-      if (isRight) {
-        this.state = 'correct';
-      } else {
-        this.state = 'incorrect';
-        this.quizService.decrementLives();
-      }
-    } else this.state = 'incorrect';
+      if (isRight) this.state = 'correct';
+    }
+
+    if (this.state != 'correct') {
+      this.state = 'incorrect';
+      this.quizService.decrementLives();
+    }
 
     const dataToStore: IChooseWordStore = {
       question: this.question,

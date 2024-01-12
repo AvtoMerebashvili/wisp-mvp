@@ -1,14 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { SharedModule } from '../../common/shared.module';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../../common/components/snackbar/snackbar.component';
-import { QuizService } from '../../quiz/services/quiz.service';
-import { TOptionResult } from '../../common/interfaces/option-result.type';
-import { gifs, wordGifs, words } from '../../quiz/data/data';
-import { IGif } from '../../common/interfaces/test.interface';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { fromEvent, debounceTime, tap } from 'rxjs';
+import { debounceTime, take, tap } from 'rxjs';
+import { TOptionResult } from '../../common/interfaces/option-result.type';
+import { IGif } from '../../common/interfaces/test.interface';
+import { SharedModule } from '../../common/shared.module';
+import { QuizService } from '../../quiz/services/quiz.service';
 import { IEnterAnswerStore } from '../interfaces/task-store.interface';
 
 @Component({
@@ -39,8 +36,10 @@ export class EnterAnswerComponent implements OnInit {
     const alreadyStored = this.quizService.existsInStore(this.taskId);
     if (alreadyStored) {
       const storeData = this.quizService.getFromStore(this.taskId);
-      this.formControl.setValue(storeData.value);
-      this.formControl.disable();
+      this.formControl.setValue(storeData.value, {
+        emitEvent: false,
+      });
+      this.formControl.disable({ emitEvent: false });
       this.state = storeData.state;
       this.question = storeData.question;
     } else {
@@ -52,6 +51,7 @@ export class EnterAnswerComponent implements OnInit {
     this.formControl.valueChanges
       .pipe(
         debounceTime(2000),
+        take(1),
         tap(() => this.onDone())
       )
       .subscribe();
@@ -64,11 +64,10 @@ export class EnterAnswerComponent implements OnInit {
     if (foundWord) {
       const isRight = this.quizService.isRight(foundWord, this.question);
       if (isRight) this.state = 'correct';
-      else {
-        this.state = 'incorrect';
-        this.quizService.decrementLives();
-      }
-    } else this.state = 'incorrect';
+    } else {
+      this.state = 'incorrect';
+      this.quizService.decrementLives();
+    }
 
     const dataToStore: IEnterAnswerStore = {
       value: this.formControl.value as string,
